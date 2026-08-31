@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: customer_order_summary
+    description: "顧客ごとの注文件数・合計金額をまとめたマートモデル"
+    columns:
+      - name: customer_id
+        description: "顧客ID"
+        tests:
+          - unique
+          - not_null
+      - name: total_amount
+        description: "完了注文の合計金額"

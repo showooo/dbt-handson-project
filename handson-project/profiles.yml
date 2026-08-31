@@ -1,0 +1,12 @@
+dbt_handson:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: 'not needed'
+      user: 'not needed'
+      role: accountadmin
+      database: dbt_handson_db
+      schema: dev
+      warehouse: dbt_handson_wh
+      threads: 8

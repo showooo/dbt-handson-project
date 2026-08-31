@@ -1,0 +1,36 @@
+version: 2
+
+sources:
+  - name: raw
+    database: dbt_handson_db
+    schema: raw
+    tables:
+      - name: customers
+      - name: orders
+
+models:
+  - name: stg_customers
+    description: "顧客マスタのステージングモデル"
+    columns:
+      - name: customer_id
+        description: "顧客ID"
+        tests:
+          - unique
+          - not_null
+      - name: email
+        description: "メールアドレス"
+        tests:
+          - not_null
+
+  - name: stg_orders
+    description: "注文明細（完了分のみ）のステージングモデル"
+    columns:
+      - name: order_id
+        description: "注文ID"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "顧客ID"
+        tests:
+          - not_null
