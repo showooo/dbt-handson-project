@@ -25,13 +25,14 @@ handson-project/
 
 ## 事前準備（主催者向け）
 
-参加者がこのプロジェクトをフォークできるように、当日までに以下を実施してください。
+当日までに以下を実施してください。
 
 1. 本ディレクトリの内容を、GitHub上の**公開（Public）リポジトリ**として別途公開する
-   （例: `github.com/<主催者アカウント>/dbt-handson-project`）。
-   - Publicにすることで、参加者がSnowflakeワークスペース作成時に個人アクセストークン（secret）の準備が不要になる。
-2. 参加者向けドキュメント（`docs/prerequisites.md` / `docs/handson-guide.md`）内のリポジトリURLを
-   実際に公開したURLに置き換える。
+   （例: `github.com/showooo/dbt-handson-project`）。
+   - Publicにすることで、参加者はGitHubアカウント不要・フォーク不要で利用できる。
+   - 参加者全員が同じリポジトリURLを使ってワークスペースを作成する。
+2. 参加者向けドキュメント（`docs/prerequisites.md` / `docs/handson-guide.md`）内のリポジトリURLが
+   実際に公開したURLと一致していることを確認する。
 3. 一度、実際に本手順で最初から最後まで通しでSnowflake上に構築し、動作を確認する（ドライラン）。
 
 ## 注意（簡略化のポイント）

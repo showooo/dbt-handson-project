@@ -2,3 +2,7 @@
 /docs/
 /AGENT.md
 /README.md
+
+# dbt生成物
+handson-project/logs/
+handson-project/target/

@@ -59,13 +59,12 @@ ALTER SCHEMA dbt_handson_db.dev SET TRACE_LEVEL = 'ALWAYS';
 
 -- =========================================================
 -- 5. API統合（GitHub連携用）作成
---    ※ my-github-account 部分は各参加者のGitHubアカウント名に置き換える。
---       フォーク先リポジトリを公開（Public）で作成する前提のため、
---       secret（個人アクセストークン）の作成は不要。
+--    主催者(showooo)の公開リポジトリを全参加者が共通で参照するため、
+--    URLは固定。secret（個人アクセストークン）の作成は不要。
 -- =========================================================
 CREATE OR REPLACE API INTEGRATION dbt_handson_git_api_integration
   API_PROVIDER = git_https_api
-  API_ALLOWED_PREFIXES = ('https://github.com/my-github-account')
+  API_ALLOWED_PREFIXES = ('https://github.com/showooo')
   ENABLED = TRUE;
 
 SELECT 'dbt_handson_db setup is now complete' AS message;
@@ -73,6 +72,7 @@ SELECT 'dbt_handson_db setup is now complete' AS message;
 -- =========================================================
 -- 後片付け（ハンズオン終了後、不要であれば実行）
 -- =========================================================
+-- DROP SEMANTIC VIEW IF EXISTS dbt_handson_db.dev.customer_orders_sv;
 -- DROP TASK IF EXISTS dbt_handson_db.dev.run_dbt_handson;
 -- DROP WAREHOUSE IF EXISTS dbt_handson_wh;
 -- DROP DATABASE IF EXISTS dbt_handson_db;
