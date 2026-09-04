@@ -5,3 +5,6 @@
 # dbt生成物
 handson-project/logs/
 handson-project/target/
+
+# AI作業ツールのローカルログ（ローカルパス等を含むため公開リポジトリに含めない）
+/.cortex/
