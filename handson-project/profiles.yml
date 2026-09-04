@@ -1,7 +1,7 @@
 dbt_handson:
-  target: dev
+  target: snowflake
   outputs:
-    dev:
+    snowflake:
       type: snowflake
       account: 'not needed'
       user: 'not needed'
