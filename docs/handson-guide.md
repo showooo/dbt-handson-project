@@ -14,8 +14,9 @@
 | 18:05-18:15 | STEP1: Snowflake環境準備（SQL実行） |
 | 18:15-18:25 | STEP2: ワークスペース作成・GitHub連携 |
 | 18:25-18:40 | STEP3: dbtモデルのコンパイル・DAG確認・run実行 |
-| 18:40-18:50 | STEP4: 結果確認・テスト実行 |
-| 18:50-18:58 | （時間があれば）STEP5: セマンティックビュー作成のデモ |
+| 18:40-18:48 | STEP4: 結果確認・テスト実行 |
+| 18:48-18:55 | STEP5: env.ymlによる環境切り替え体験 |
+| 18:55-18:58 | （時間があれば）STEP6: セマンティックビュー作成のデモ |
 | 18:58-19:00 | クロージング・質疑応答 |
 
 ---
@@ -31,7 +32,7 @@
 
 このSQLで、以下が作成されます。
 - ウェアハウス: `dbt_handson_wh`
-- データベース: `dbt_handson_db`（`raw` / `dev` / `integrations` スキーマ）
+- データベース: `dbt_handson_db`（`raw` / `dev` / `prod` / `integrations` スキーマ）
 - サンプルテーブル: `raw.customers`, `raw.orders`
 - API統合: `dbt_handson_git_api_integration`（GitHub連携用）
 
@@ -92,7 +93,58 @@
 
 ---
 
-## STEP5（時間があれば）: セマンティックビュー作成のデモ（8分）
+## STEP5: env.ymlによる環境切り替え体験（7分）
+
+実際の開発では、開発環境（dev）と本番環境（prod）でスキーマやデータベースを分けて運用します。
+dbt Projects on Snowflake では `env.yml` で環境ごとの変数を定義し、
+ワークスペースの環境セレクタで簡単に切り替えることができます。
+
+1. ワークスペース内の `env.yml` を開き、内容を確認する。
+
+   ```yaml
+   env_config:
+     default_environment: dev
+     environments:
+       - name: dev
+         env:
+           DBT_SCHEMA: "dev"
+       - name: prod
+         env:
+           DBT_SCHEMA: "prod"
+   ```
+
+   - `dev` と `prod` の2つの環境が定義されている。
+   - それぞれ `DBT_SCHEMA` 変数に異なるスキーマ名が設定されている。
+
+2. `profiles.yml` を開き、`schema` の値が環境変数を参照していることを確認する。
+
+   ```yaml
+   schema: "{{ env_var('DBT_SCHEMA', 'dev') }}"
+   ```
+
+   - `env_var('DBT_SCHEMA', 'dev')` により、`env.yml` の `DBT_SCHEMA` の値がスキーマ名として使われる。
+   - 第2引数の `'dev'` はフォールバック値（`env.yml` がない場合のデフォルト）。
+
+3. ワークスペース上部の **環境セレクタ**（Environment）で **prod** を選択する。
+
+4. コマンド一覧から **Run** を選択し、実行する。
+
+5. STEP4で作成した `sandbox.sql` で以下を実行し、`prod` スキーマにモデルが作成されたことを確認する。
+
+   ```sql
+   show tables in schema dbt_handson_db.prod;
+   show views in schema dbt_handson_db.prod;
+   ```
+
+6. 環境セレクタを **dev** に戻す。
+
+> **ポイント**: `env.yml` を使うことで、dbtのモデルファイル自体は一切変更せずに、
+> 出力先スキーマを環境ごとに切り替えられます。実際のプロジェクトでは、
+> データベース名・ウェアハウス名・ロールなども環境変数化して管理します。
+
+---
+
+## STEP6（時間があれば）: セマンティックビュー作成のデモ（8分）
 
 時間に余裕がある場合のみ、以下を**デモとして紹介**します（全員での実施は必須としません）。
 
@@ -297,7 +349,7 @@ DROP SEMANTIC VIEW IF EXISTS dbt_handson_db.dev.customer_orders_sv_dbt;
 
 ## クロージング
 
-- 本ハンズオンで体験したこと（モデル定義、DAG、ref/source、run、test、セマンティックビュー）を振り返る。
+- 本ハンズオンで体験したこと（モデル定義、DAG、ref/source、run、test、環境切り替え、セマンティックビュー）を振り返る。
 - 自チームの開発プロセスへの適用イメージについて簡単に質疑応答を行う。
 
 ---

@@ -15,6 +15,7 @@ CREATE WAREHOUSE IF NOT EXISTS dbt_handson_wh
 CREATE DATABASE IF NOT EXISTS dbt_handson_db;
 CREATE SCHEMA IF NOT EXISTS dbt_handson_db.raw;         -- ソースデータ格納用
 CREATE SCHEMA IF NOT EXISTS dbt_handson_db.dev;         -- dbtモデルのdevターゲット出力先
+CREATE SCHEMA IF NOT EXISTS dbt_handson_db.prod;        -- dbtモデルのprodターゲット出力先
 CREATE SCHEMA IF NOT EXISTS dbt_handson_db.integrations; -- API統合の管理用（説明用スキーマ）
 
 USE DATABASE dbt_handson_db;

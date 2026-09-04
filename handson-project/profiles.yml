@@ -7,6 +7,6 @@ dbt_handson:
       user: 'not needed'
       role: accountadmin
       database: dbt_handson_db
-      schema: dev
+      schema: "{{ env_var('DBT_SCHEMA', 'dev') }}"
       warehouse: dbt_handson_wh
       threads: 8
